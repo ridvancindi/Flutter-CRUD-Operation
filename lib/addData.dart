@@ -516,7 +516,8 @@ class _addDataState extends State<addData> {
                         SizedBox(
                           height: 15,
                         ),
-                        country_city()
+                        country_city(),
+                        Text("data")
                       ],
                     ),
                   ],

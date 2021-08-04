@@ -517,7 +517,6 @@ class _addDataState extends State<addData> {
                           height: 15,
                         ),
                         country_city(),
-                        Text("data")
                       ],
                     ),
                   ],

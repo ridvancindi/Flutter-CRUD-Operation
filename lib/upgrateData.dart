@@ -151,8 +151,9 @@ class _upgrateDataState extends State<upgrateData> {
     }).catchError((hata) => print("Hata $hata"));
     sehir = product!.companyType;
     _privaceSel = product!.provinceId;
-    _countrySel = product!.countryId;
     ilceGetir(product!.provinceId);
+    _countrySel = product!.countryId;
+    
     _districtSel = product!.districtId;
     if (sehir == 0) {
       visables1 = false;

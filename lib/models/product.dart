@@ -172,5 +172,4 @@ class Product {
       this._createdDate = map["createdDate"];
       this._upgrateDate = map["upgrateDate"];
   }
-  
 }

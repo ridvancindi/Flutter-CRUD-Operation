@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app1/detailpage.dart';
 import 'package:flutter_app1/homepage.dart';
-import 'package:flutter_app1/routeGanerate.dart';
 
 void main() {
   runApp(MyApp());

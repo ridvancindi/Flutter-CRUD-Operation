@@ -94,6 +94,11 @@ class DbHelper {
     var sonuc = await db.update(tblProduct, product.toMap(),where: "$colid = ?",whereArgs: [product.id]);
     return sonuc;
   }
+  Future<int> dataTransactionUpgrate(Data data) async{
+    var db = await _getDatabase();
+    var sonuc = await db.update(tbldata, data.toMap(),where: "$colid = ?",whereArgs: [data.id]);
+    return sonuc;
+  }
   Future<int> dataDelete(int id) async{
     var db = await _getDatabase();
     var sonuc =await db.delete(tblProduct,where: "$colid =?",whereArgs: [id]);

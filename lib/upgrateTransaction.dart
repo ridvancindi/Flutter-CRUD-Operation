@@ -1,29 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app1/upgrateData.dart';
 import 'package:intl/intl.dart';
 
 import 'db/dbHelper.dart';
 import 'models/icdata.dart';
 
-class addTransaction extends StatefulWidget {
-  int id;
-  addTransaction(this.id);
+class upgrateTansaction extends StatefulWidget {
+  Data id;
+  upgrateTansaction(this.id);
 
   @override
-  _addTransactionState createState() => _addTransactionState(id);
+  _upgrateTansactionState createState() => _upgrateTansactionState(id);
 }
 
-class _addTransactionState extends State<addTransaction> {
-  int id;
-  _addTransactionState(this.id);
+class _upgrateTansactionState extends State<upgrateTansaction> {
+  Data id;
+  _upgrateTansactionState(this.id);
   var _content = TextEditingController();
-  var _date = TextEditingController();
   var _formKey = GlobalKey<FormState>();
   DbHelper? _databaseHelper;
-  List<Data>? allData;
+  List<Data>? allData;  
+  String? _selectDate;
+  DateTime? _date;
+  String? _selectHour;
   var _key = GlobalKey<ScaffoldState>();
   @override
   void initState() {
     super.initState();
+    _selectDate = id.date;
+    _selectHour = id.hour;
+    _content.text = id.contents;
     allData = <Data>[];
     _databaseHelper = DbHelper();
     _databaseHelper!.allData().then((allStudentMapList) {
@@ -34,8 +40,6 @@ class _addTransactionState extends State<addTransaction> {
     }).catchError((hata) => print("Hata $hata"));
   }
 
-  String? _selectDate;
-  String? _selectHour;
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -68,8 +72,7 @@ class _addTransactionState extends State<addTransaction> {
                           borderSide: BorderSide(color: Colors.red),
                           borderRadius: BorderRadius.circular(10.0),
                         )),
-                  ),
-                  SizedBox(height: 15,),
+                  ),SizedBox(height: 15,),
                   TextFormField(
                     showCursor: true,
                     readOnly: true,
@@ -90,7 +93,6 @@ class _addTransactionState extends State<addTransaction> {
                     keyboardType: TextInputType.text,
                     style: TextStyle(fontSize: 15),
                     autofocus: false,
-                    controller: _date,
                     validator: (kontroledilecekname) {
                       return null;
                     },
@@ -137,7 +139,6 @@ class _addTransactionState extends State<addTransaction> {
                     keyboardType: TextInputType.text,
                     style: TextStyle(fontSize: 15),
                     autofocus: false,
-                    controller: _date,
                     validator: (kontroledilecekname) {
                       return null;
                     },
@@ -161,23 +162,21 @@ class _addTransactionState extends State<addTransaction> {
                           ),
                           onPressed: () {
                             setState(() {
-                              if (_formKey.currentState!.validate()) {
-                                addData(Data(id, _content.text, _selectDate,
-                                    _selectHour, null));
-                                Navigator.of(context).pop(true);
-                              }
+                              _upgrateData(Data.withId(id.id, id.companyId, _content.text, _selectHour, _selectHour, null));
                             });
                           }),
                     ),
                   )
                 ],
               ),
-            ),
+            ),   
           ),
         ));
   }
-
-  void addData(Data data) async {
-    var addNewData = await _databaseHelper!.addTransaction(data);
+  void _upgrateData(Data data) async {
+    var sonuc = await _databaseHelper!.dataTransactionUpgrate(data);
+    if (sonuc == 1){
+      Navigator.of(context).pop(true);
+    }
   }
 }

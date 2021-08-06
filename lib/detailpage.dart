@@ -4,6 +4,7 @@ import 'package:flutter_app1/addTransaction.dart';
 import 'package:flutter_app1/db/dbHelper.dart';
 import 'package:flutter_app1/models/product.dart';
 import 'package:flutter_app1/upgrateData.dart';
+import 'package:flutter_app1/upgrateTransaction.dart';
 
 import 'models/icdata.dart';
 
@@ -350,14 +351,25 @@ class _DetailPageState extends State<DetailPage> {
                           ),
                           trailing: Wrap(children: [
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () async {
+                                bool result = await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => upgrateTansaction(
+                                            transaction![index])));
+                                if (result) {
+                                  getData();
+                                }
+                              },
                               child: Icon(Icons.edit),
                             ),
                             SizedBox(
                               width: 10,
                             ),
                             GestureDetector(
-                              onTap: () {deleteTransaction(transaction![index].id);},
+                              onTap: () {
+                                deleteTransaction(transaction![index].id);
+                              },
                               child: Icon(Icons.delete),
                             ),
                           ]),
@@ -401,6 +413,7 @@ class _DetailPageState extends State<DetailPage> {
     Navigator.pop(context, back);
     result = await _dbHelper!.dataDelete(product!.id);
   }
+
   void deleteTransaction(int id) async {
     int result;
     result = await _dbHelper!.dataTransactionDelete(id);
